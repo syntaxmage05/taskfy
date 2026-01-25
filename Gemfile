@@ -71,3 +71,5 @@ end
 gem "connection_pool", "~> 2.4"
 gem "react-rails", "~> 2.7.1"
 gem "responders", "~> 3.2"
+
+gem "pry-byebug", "~> 3.12"
