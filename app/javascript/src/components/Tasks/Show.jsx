@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 
+import commentsApi from "apis/comments";
 import tasksApi from "apis/tasks";
+import Comments from "components/Comments";
 import { Button, Container, PageLoader } from "components/commons";
 import { useHistory, useParams } from "react-router-dom";
 
 const Show = () => {
   const [task, setTask] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [newComment, setNewComment] = useState("");
+  const [loading, setLoading] = useState(false);
   const { slug } = useParams();
-
   const history = useHistory();
 
   const updateTask = () => {
@@ -25,6 +28,23 @@ const Show = () => {
     } catch (error) {
       logger.error(error);
       history.push("/");
+    }
+  };
+
+  const addComment = async event => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      await commentsApi.create({
+        content: newComment,
+        task_id: task.id,
+      });
+      fetchTaskDetails();
+      setNewComment("");
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,21 +68,26 @@ const Show = () => {
                 {task?.assigned_user?.name}
               </p>
               <p className="text-base text-gray-700">
-                <span className="font-semibold">Created by:</span>
+                <span className="font-semibold">Created by: </span>
                 {task?.task_owner?.name}
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-end gap-x-3">
-            <Button
-              buttonText="Edit"
-              icon="edit-line"
-              size="small"
-              style="secondary"
-              onClick={updateTask}
-            />
-          </div>
+          <Button
+            buttonText="Edit"
+            icon="edit-line"
+            size="small"
+            style="secondary"
+            onClick={updateTask}
+          />
         </div>
+        <Comments
+          comments={task?.comments}
+          handleSubmit={addComment}
+          loading={loading}
+          newComment={newComment}
+          setNewComment={setNewComment}
+        />
       </div>
     </Container>
   );
