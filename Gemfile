@@ -79,4 +79,5 @@ gem "responders", "~> 3.2"
 
 gem "data_migrate"
 gem "pry-byebug", "~> 3.12"
+gem "pundit"
 gem "simplecov", require: false, group: :test
