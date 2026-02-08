@@ -11,8 +11,8 @@ class TasksController < ApplicationController
     tasks = policy_scope(Task)
     @pending_tasks = tasks.pending.includes(:assigned_user)
     @completed_tasks = tasks.completed
-    tasks_with_assigned_user = tasks.as_json(include: { assigned_user: { only: %i[name id] } })
-    render_json({ tasks: tasks_with_assigned_user })
+    # tasks_with_assigned_user = tasks.as_json(include: { assigned_user: { only: %i[name id] } })
+    # render_json({ tasks: tasks_with_assigned_user })
   end
 
   def create
