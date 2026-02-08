@@ -8,11 +8,19 @@ class TasksController < ApplicationController
 
   def index
     # tasks = TaskPolicy::Scope.new(current_user, Task).resolve
-    tasks = policy_scope(Task)
-    @pending_tasks = tasks.pending.includes(:assigned_user)
-    @completed_tasks = tasks.completed
+    # tasks = policy_scope(Task)
+    # pending_starred = tasks.pending.starred.includes(:assigned_user).order("updated_at DESC")
+    # pending_unstarred = tasks.pending.unstarred.includes(:assigned_user).order("updated_at DESC")
+    # @pending_tasks = pending_starred + pending_unstarred
+
+    # completed_starred = tasks.completed.starred.order("updated_at DESC")
+    # completed_unstarred = tasks.completed.unstarred.order("updated_at DESC")
+    # @completed_tasks = completed_starred + completed_unstarred
     # tasks_with_assigned_user = tasks.as_json(include: { assigned_user: { only: %i[name id] } })
     # render_json({ tasks: tasks_with_assigned_user })
+    tasks = policy_scope(Task)
+    @pending_tasks = tasks.includes(:assigned_user).of_status(:pending)
+    @completed_tasks = tasks.of_status(:completed)
   end
 
   def create
@@ -43,7 +51,7 @@ class TasksController < ApplicationController
   private
 
     def task_params
-      params.require(:task).permit(:title, :assigned_user_id, :progress)
+      params.require(:task).permit(:title, :assigned_user_id, :progress, :status)
     end
 
     def ensure_authorized_update_to_restricted_attrs
