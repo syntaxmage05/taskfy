@@ -73,7 +73,7 @@ This project simplifies complex workflows by providing:
 
 |      | Component            | Details                                                                                     |
 | :--- | :------------------- | :------------------------------------------------------------------------------------------ |
-| ⚙️  | **Architecture**     | <ul><li>Ruby on Rails backend with MVC pattern</li><li>Single monolithic app structure</li></ul> |
+| ⚙️  | **Architecture**     | <ul><li>Ruby on Rails backend with React on the frontend</li><li>Ruby API and React on the frontend structure</li></ul> |
 | 🔩 | **Code Quality**     | <ul><li>Uses RuboCop for linting</li><li>Consistent code style with Prettier & ESLint for frontend</li><li>Includes Rake tasks for automation</li></ul> |
 | 📄 | **Documentation**    | <ul><li>Dockerfile for containerization</li><li>README.md with project overview</li><li>Config files (.yml, .json) for setup</li></ul> |
 | 🔌 | **Integrations**      | <ul><li>GitHub Actions for CI/CD pipeline</li><li>Docker for containerization</li><li>Bundler, npm, yarn for dependency management</li></ul> |
